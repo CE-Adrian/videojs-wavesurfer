@@ -14,7 +14,7 @@ const WavesurferMiddleware = {
     setSource(srcObj, next) {
         // check if this player is using the videojs-wavesurfer plugin
         if (this.player.usingPlugin('wavesurfer')) {
-            let backend = this.player.wavesurfer().surfer.params.backend;
+            let backend = this.player.wavesurfer().surfer.options.backend;
             let src = srcObj.src;
             let peaks = srcObj.peaks;
 
@@ -32,10 +32,10 @@ const WavesurferMiddleware = {
                     let element = this.player.tech_.el();
                     if (peaks === undefined) {
                         // element without peaks
-                        this.player.wavesurfer().load(element);
+                        this.player.wavesurfer().load(src);
                     } else {
                         // element with peaks
-                        this.player.wavesurfer().load(element, peaks);
+                        this.player.wavesurfer().load(src, peaks);
                     }
                     break;
             }

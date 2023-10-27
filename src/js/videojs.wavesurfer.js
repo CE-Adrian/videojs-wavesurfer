@@ -133,9 +133,8 @@ class Wavesurfer extends Plugin {
 
         // wavesurfer.js setup
         this.surfer = WaveSurfer.create(mergedOptions);
-        this.surfer.on(Event.ERROR, this.onWaveError.bind(this));
         this.surfer.on(Event.FINISH, this.onWaveFinish.bind(this));
-        this.backend = this.surfer.params.backend;
+        this.backend = this.surfer.options.backend;
         this.log('Using wavesurfer.js ' + this.backend + ' backend.');
 
         // check if the wavesurfer.js microphone plugin is enabled
@@ -178,7 +177,7 @@ class Wavesurfer extends Plugin {
         // video.js fluid option
         if (this.player.options_.fluid === true) {
             // give wave element a classname so it can be styled
-            this.surfer.drawer.wrapper.className = wavesurferClassName;
+            this.surfer.getWrapper().className = wavesurferClassName;
         }
     }
 
@@ -681,6 +680,7 @@ class Wavesurfer extends Plugin {
      * @private
      */
     onWaveSeek() {
+        this.log('seeking');
         this.setCurrentTime();
     }
 
@@ -787,20 +787,9 @@ class Wavesurfer extends Plugin {
                 }
             }
 
-            // destroy old drawing
-            this.surfer.drawer.destroy();
-
             // set new dimensions
-            this.surfer.params.width = newWidth;
-            this.surfer.params.height = newHeight - this.player.controlBar.height();
-
-            // redraw waveform
-            this.surfer.createDrawer();
-            this.surfer.drawer.wrapper.className = wavesurferClassName;
-            this.surfer.drawBuffer();
-
-            // make sure playhead is restored at right position
-            this.surfer.drawer.progress(this.surfer.backend.getPlayedPercents());
+            this.surfer.setOptions({width: newWidth});
+            this.surfer.setOptions({height: newHeight - this.player.controlBar.height()});
         }
     }
 

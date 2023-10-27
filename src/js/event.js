@@ -16,7 +16,7 @@ Event.PAUSE = 'pause';
 
 // wavesurfer.js
 Event.FINISH = 'finish';
-Event.SEEK = 'seek';
+Event.SEEK = 'seeking';
 Event.REDRAW = 'redraw';
 Event.AUDIOPROCESS = 'audioprocess';
 Event.DEVICE_READY = 'deviceReady';

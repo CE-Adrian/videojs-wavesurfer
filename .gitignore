@@ -15,6 +15,7 @@ examples/media/test
 # Dependency-related directories
 node_modules
 bower_components
+.npm
 
 # Build-related
 dist/
