@@ -123,8 +123,7 @@ class Wavesurfer extends Plugin {
             if (this.backend === WEBAUDIO &&
                 this.player.controlBar.playToggle !== undefined) {
                 // handle play toggle interaction
-                this.player.controlBar.playToggle.on(['tap', 'click'],
-                    this.onPlayToggle.bind(this));
+                this.player.controlBar.playToggle.on(['tap', 'click'], this.onPlayToggle.bind(this));
 
                 // disable play button until waveform is ready
                 this.player.controlBar.playToggle.hide();
@@ -137,20 +136,20 @@ class Wavesurfer extends Plugin {
         this.backend = this.surfer.options.backend;
         this.log('Using wavesurfer.js ' + this.backend + ' backend.');
 
-        // check if the wavesurfer.js microphone plugin is enabled
-        if ('microphone' in this.player.wavesurfer().surfer.getActivePlugins()) {
-            // enable audio input from a microphone
-            this.liveMode = true;
-            this.waveReady = true;
-            this.log('wavesurfer.js microphone plugin enabled.');
+        // // check if the wavesurfer.js microphone plugin is enabled
+        // if ('microphone' in this.player.wavesurfer().surfer.getActivePlugins()) {
+        //     // enable audio input from a microphone
+        //     this.liveMode = true;
+        //     this.waveReady = true;
+        //     this.log('wavesurfer.js microphone plugin enabled.');
 
-            // in live mode, show play button at startup
-            this.player.controlBar.playToggle.show();
+        //     // in live mode, show play button at startup
+        //     this.player.controlBar.playToggle.show();
 
-            // listen for wavesurfer.js microphone plugin events
-            this.surfer.microphone.on(Event.DEVICE_ERROR,
-                this.onWaveError.bind(this));
-        }
+        //     // listen for wavesurfer.js microphone plugin events
+        //     this.surfer.microphone.on(Event.DEVICE_ERROR,
+        //         this.onWaveError.bind(this));
+        // }
 
         // listen for wavesurfer.js events
         this.surferReady = this.onWaveReady.bind(this);
@@ -164,11 +163,12 @@ class Wavesurfer extends Plugin {
             }
         }
 
-        // only listen to the wavesurfer.js playback events when not
-        // in live mode
-        if (!this.liveMode) {
-            this.setupPlaybackEvents(true);
-        }
+        this.setupPlaybackEvents(true);
+        // // only listen to the wavesurfer.js playback events when not
+        // // in live mode
+        // if (!this.liveMode) {
+        //     this.setupPlaybackEvents(true);
+        // }
 
         // video.js player events
         this.player.on(Event.VOLUMECHANGE, this.onVolumeChange.bind(this));
@@ -521,6 +521,7 @@ class Wavesurfer extends Plugin {
         currentTime = isNaN(currentTime) ? 0 : currentTime;
         duration = isNaN(duration) ? 0 : duration;
 
+        this.player.currentTime(currentTime);
         // update current time display component
         if (this.player.controlBar.currentTimeDisplay &&
             this.player.controlBar.currentTimeDisplay.contentEl() &&
@@ -680,7 +681,6 @@ class Wavesurfer extends Plugin {
      * @private
      */
     onWaveSeek() {
-        this.log('seeking');
         this.setCurrentTime();
     }
 

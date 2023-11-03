@@ -20,6 +20,8 @@ const WavesurferMiddleware = {
 
             switch (backend) {
                 case 'WebAudio':
+                    // load source into video.js
+                    next(null, srcObj);
                     // load url into wavesurfer
                     this.player.wavesurfer().load(src);
                     break;
