@@ -281,9 +281,12 @@ class Wavesurfer extends Plugin {
                 if (typeof url === 'string') {
                     this.log('Loading URL: ' + url);
                 } else {
+                    this.log(url.src);
+                    this.surfer.load(url.src);
+                    this.surfer.setMediaElement(url);
                     this.log('Loading element: ' + url);
                 }
-                this.surfer.load(url);
+                // this.surfer.load(url);
             }
         }
     }

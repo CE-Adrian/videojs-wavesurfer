@@ -20,8 +20,6 @@ const WavesurferMiddleware = {
 
             switch (backend) {
                 case 'WebAudio':
-                    // load source into video.js
-                    next(null, srcObj);
                     // load url into wavesurfer
                     this.player.wavesurfer().load(src);
                     break;
@@ -34,7 +32,7 @@ const WavesurferMiddleware = {
                     let element = this.player.tech_.el();
                     if (peaks === undefined) {
                         // element without peaks
-                        this.player.wavesurfer().load(src);
+                        this.player.wavesurfer().load(element);
                     } else {
                         // element with peaks
                         this.player.wavesurfer().load(src, peaks);
