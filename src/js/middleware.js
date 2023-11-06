@@ -35,7 +35,7 @@ const WavesurferMiddleware = {
                         this.player.wavesurfer().load(element);
                     } else {
                         // element with peaks
-                        this.player.wavesurfer().load(src, peaks);
+                        this.player.wavesurfer().load(element, peaks);
                     }
                     break;
             }

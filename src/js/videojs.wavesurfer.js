@@ -273,20 +273,21 @@ class Wavesurfer extends Plugin {
             this.log('Loading object: ' + JSON.stringify(url));
             this.surfer.loadBlob(url);
         } else {
+            if (typeof url !== 'string') {
+                //url is a media element
+                this.log('Loading element: ' + url);
+                this.surfer.setMediaElement(url);
+                url = url.src;
+            } else {
+                this.log('Loading URL: ' + url);
+            }
+
             // load peak data from array or file
             if (peaks !== undefined) {
                 this.loadPeaks(url, peaks);
             } else {
                 // no peaks
-                if (typeof url === 'string') {
-                    this.log('Loading URL: ' + url);
-                } else {
-                    this.log(url.src);
-                    this.surfer.load(url.src);
-                    this.surfer.setMediaElement(url);
-                    this.log('Loading element: ' + url);
-                }
-                // this.surfer.load(url);
+                this.surfer.load(url);
             }
         }
     }
